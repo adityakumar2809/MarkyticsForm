@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <!-- <link rel="stylesheet" href="{% static 'adminmart/src/dist/css/style.min.css' %}">
+    <script src="{% static 'adminmart/src/dist/js/custom.min.js' %}"></script> -->
+
+    {% block head %}
+        <title>New Master Incident</title>
+    {% endblock head %}
+
+    <style>
+        li.active {
+            color: #fff !important;
+            background: linear-gradient(to right,#8971ea,#7f72ea,#7574ea,#6a75e9,#5f76e8);
+            border-radius: 0 60px 60px 0;
+        }
+        li.active>a>span, li.active>a>i>span {
+            color: #fff !important;
+        }
+        input:focus {
+            border-bottom: 1px solid#8971ea !important;
+            box-shadow: 0 1px 0 0 #8971ea !important;
+        }
+        label.active {
+            color: #8971ea !important;
+        }
+        .materialize-textarea:focus {
+            border-bottom: 1px solid#8971ea !important;
+            box-shadow: 0 1px 0 0 #8971ea !important;
+        }
+        ul.dropdown-content.select-dropdown li span {
+            color: #8971ea;
+        }
+        input#search:focus {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.87) !important;
+            box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.87) !important;
+        }
+        i.material-icons.prefix.active {
+            color: rgba(0, 0, 0, 0.87) !important;
+        }
+        .user-name {
+            color: rgba(0, 0, 0, 0.87) !important;
+        }
+        #dropdown1>li>a, #dropdown1>li>a>i {
+            color: rgba(0, 0, 0, 0.50) !important;
+        }
+        #dropdown1>li>a:hover, #dropdown1>li>a>i:hover {
+            color: rgba(0, 0, 0, 0.87) !important;
+        } 
+        .form-btns {
+            background: linear-gradient(to right,#8971ea,#7f72ea,#7574ea,#6a75e9,#5f76e8);
+        }
+    </style>
+
+</head>
+<body class='blue-grey lighten-5'>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper grey lighten-4 grey-text text-lighten-1">
+            <a href="#" class="brand-logo"><img src="{% static 'images/logo-icon.png' %}" style="width: 40px;"><img src="{% static 'images/logo-text.png' %}" style="width: 160px;"></a>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons grey-text text-lighten-1">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <i class="material-icons" style="margin-right: 30px;">notifications</i>
+                </li>
+                <li>
+                    <i class="material-icons" style="margin-right: 610px;">settings</i>
+                </li>
+                <li>
+                    <div class="input-field inline">
+                        <i class="material-icons prefix" style="top: 0px;">search</i>
+                        <input id="search" type="text" placeholder="Search..">
+                    </div>
+                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="#!" style="pointer-events: none !important;">
+                            <img src="{% static 'images/profile-pic.jpg' %}" alt="ProfileImage" class="circle" style="width: 40px; margin-top: 10px;">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!" class="dropdown-trigger grey-text text-lighten-1" data-target="dropdown1" style="padding-right: 70px; font-size: 18px;">&nbsp;Hello, <strong class="user-name">{{ user.username }}</strong></a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="#!" style="pointer-events: none !important;">
+                            <img src="{% static 'images/default-profile-pic.png' %}" alt="ProfileImage" class="circle" style="width: 40px; margin-top: 10px;">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-lighten-1"style="padding-right: 70px; font-size: 18px;">&nbsp;Welcome, <strong class="user-name">Guest</strong></a>
+                    </li>
+                {% endif %}
+                <li><a href="#"></a></li>
+            </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Dropdown Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="#!"><i class="material-icons">person</i>My Profile</a></li>
+        <li><a href="#!"><i class="material-icons">payment</i>My Balance</a></li>
+        <li><a href="#!"><i class="material-icons">mail</i>Inbox</a></li>
+
+        <li class="divider" tabindex="-1"></li>
+        
+        <li><a href="#!"><i class="material-icons">settings</i>Settings</a></li>
+        
+        <li class="divider" tabindex="-1"></li>
+        
+        <li><a href="#!"><i class="material-icons">exit_to_app</i>Sign Out</a></li>
+    </ul>
+
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+        <br>
+        <li><img src="{% static 'images/logo-icon.png' %}" style="width: 40px; margin-left: 25px;">&nbsp;&nbsp;&nbsp;<img src="{% static 'images/logo-text.png' %}" style="width: 160px;"></li>
+        <li class="side-menu-item" id="item-dashboard"><a class="waves-effect grey-text text-lighten-1" href="#!" style="font-size: 17px;"><i class="material-icons grey-text text-lighten-1"><span>home</span></i><span>Dashboard</span></a></li>
+        
+        <li><div class="divider"></div></li>
+        
+        <li><a class="subheader black-text" style="font-size: 13px;">INCIDENT REPORTS</a></li>
+        <li class="side-menu-item" id="item-report"><a class="waves-effect grey-text text-lighten-1" href="{% url 'formApp:initial_report' %}" style="font-size: 17px;"><i class="material-icons grey-text text-lighten-1"><span>assignment</span></i><span>File an Incident</span></a></li>
+        
+        <li><div class="divider"></div></li>
+        
+        <li><a class="subheader black-text" style="font-size: 13px;">AUTHENTICATION</a></li>
+        {% if user.is_authenticated %}
+            <li class="side-menu-item" id="item-logout"><a class="waves-effect grey-text text-lighten-1" href="{% url 'account:logout' %}" style="font-size: 17px;"><i class="material-icons grey-text text-lighten-1"><span>exit_to_app</span></i><span>Sign Out</span></a></li>
+        {% else %}
+            <li class="side-menu-item" id="item-login"><a class="waves-effect grey-text text-lighten-1" href="{% url 'account:login' %}" style="font-size: 17px;"><i class="material-icons grey-text text-lighten-1"><span>lock</span></i><span>Sign In</span></a></li>
+            <li class="side-menu-item" id="item-signup"><a class="waves-effect grey-text text-lighten-1" href="{% url 'account:signup' %}" style="font-size: 17px;"><i class="material-icons grey-text text-lighten-1"><span>input</span></i><span>Sign Up</span></a></li>
+        {% endif %}
+    </ul>
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block tail %}
+    {% endblock tail %}
+
+    <script>
+        $(document).ready(function(){
+            $('.sidenav').sidenav();
+            $('select').formSelect();
+
+            var url = window.location.href;
+            if (url.includes("signup")) {
+                $('#item-signup').addClass('active');
+            } else if (url.includes("login")) {
+                $('#item-login').addClass('active');
+            } else if (url.includes("logout")) {
+                $('#item-logout').addClass('active');
+            } else {
+                $('#item-report').addClass('active');
+            }
+
+        });
+
+        $('.dropdown-trigger').dropdown({
+            coverTrigger: false
+        });
+
+        $('.side-menu-item').click(function() {
+            var clicked_element = $(this)
+            $('.side-menu-item').each(function() {
+                $(this).removeClass('active');
+            })
+            clicked_element.addClass('active');
+        })
+    </script>
+</body>
+</html>

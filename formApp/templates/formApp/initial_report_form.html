@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+    <title>New Master Incident</title>
+    <link rel="stylesheet" href="{% static 'css/custom_css.css' %}">     
+{% endblock head %}
+
+
+{% block content %}
+    
+    <div class="row blue-grey lighten-5">
+        <div class="col s10 offset-s2">
+            <div class="form-div">
+                <div class="row">
+                    <form class="col s12" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <br><br>
+                            <div class="input-field col s10 offset-m1">
+                                {{ form.location }}
+                                <label>Location *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                <label>Incident Description *</label>
+                                {{ form.incident_description|add_class:'materialize-textarea' }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s5 offset-m1">
+                                <label>Date of Incident *</label><br>
+                                {{ form.date_of_incident }}
+                            </div>
+                            <div class="input-field col s5">
+                                <label>Time of Incident *</label><br>
+                                {{ form.time_of_incident }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                <label>Incident Location <i class="material-icons tiny">info</i></label>
+                                {{ form.incident_location|add_class:'materialize-textarea' }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                {{ form.initial_severity }}
+                                <label>Initial Severity *</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                {{ form.suspected_cause|add_class:'materialize-textarea' }}
+                                <label>Suspected Cause</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                {{ form.immediate_actions_taken|add_class:'materialize-textarea' }}
+                                <label>Immediate Actions Taken</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                <label>Sub Incident Types</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                <p>
+                                    <label>
+                                        {{ form.sub_incident_environmental_incident }} <span>Environmental Incident</span>
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        {{ form.sub_incident_injury_illness }} <span>Injury/Illness</span>
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        {{ form.sub_incident_property_damage }} <span>Property Damage</span>
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        {{ form.sub_incident_vehicle }} <span>Vehicle</span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s10 offset-m1">
+                                <button class="btn waves-effect form-btns" type="submit">Save</button> &nbsp;&nbsp;&nbsp;
+                                <a class="btn waves-effect form-btns cancel-save">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}
+
+
+{% block tail %}
+    <script>
+        $('.cancel-save').click(function () {
+            $('input').each(function() {
+                $(this).val('');
+            })
+            $('textarea').each(function() {
+                $(this).val('');
+            })
+            $('label').each(function() {
+                $(this).removeClass('active');
+            })
+            $('input[type=checkbox]').prop('checked',false);
+            // $('select').formSelect();
+        })
+    </script>
+{% endblock tail %}
